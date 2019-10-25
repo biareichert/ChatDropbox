@@ -72,6 +72,12 @@ allOK:
 	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.ChatServer;  cd -"
 	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.ChatClient;  cd -"
 
+client:
+	java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.ChatClient
+
+server:
+	java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.ChatServer
+
 cleanall:
 	rm -rf $(NAME)
 	rm -rf ~/.m2/
