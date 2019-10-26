@@ -9,12 +9,17 @@
 2. Criar projeto mvn
   $ make
 
-3. Compilar o servidor
+3. Abrir pasta criada
+ $ cd sdi-dropbox
+
+4. Compilar o servidor
   $ make server
 
-4. Em outro terminal, compilar o cliente
+5. Em outro terminal, compilar o cliente
   $ make client
 
   #######################################################################################################
   #                                        Observações
   #######################################################################################################
+
+O ChatServer baixa os arquivos que estão na pasta f_saida de cada cliente e faz o upload em server_dir.
