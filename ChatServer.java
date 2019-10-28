@@ -20,7 +20,7 @@ import java.lang.InterruptedException;
 public class ChatServer{
 
   private static final String ACCESS_TOKEN = "bV9CF_mwE-AAAAAAAAABTyllMAsCYrSID0reQ-u5pI2U375noLTnfGhTov48M04b";
-  private static final String dropboxDir = "dropbox_chat_bia", clienteEntrada="f_entrada", clienteSaida = "f_saida", server_dir="server_dir", extensaoClientEntrada=".client", extensaoClientSaida=".chat", extensaoServer=".serv";
+  private static final String dropboxDir = "dropbox_chat_bia", clienteEntrada="entrada", clienteSaida = "saida", server_dir="server_dir", extensaoClientEntrada=".client", extensaoClientSaida=".chat", extensaoServer=".serv";
   //server_dir é o nome do diretorio do servidor local e dropbox (mesmo nome)
 
   public static DbxRequestConfig config;
@@ -88,7 +88,7 @@ public class ChatServer{
           System.out.println("upload: "+server_dir+"/"+nomeCliente+"/"+nomeArquivo+" :: destino: "+destino+"/"+nomeArquivo);
           // if(extensao.compareTo(extensaoClientEntrada)!=0){
           InputStream in = new FileInputStream(server_dir+"/"+nomeCliente+"/"+nomeArquivo);
-          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+nomeArquivo.replace(extensaoServer,extensaoClientEntrada)).uploadAndFinish(in);
+          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+nomeArquivo).uploadAndFinish(in);
       }catch (DbxException ex) {
           System.out.println(ex.getMessage());
       }
@@ -106,7 +106,7 @@ public class ChatServer{
       ChatServer cs = new ChatServer();
 
       while(true){
-        System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
+      //  System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
         List<String> diretoriosDropbox = cs.listarDiretoriosDropboxChat_clientes();
         List<String> clientes = new ArrayList<String>();
 
@@ -117,7 +117,11 @@ public class ChatServer{
           }
         }
         //criar o diretorio fisico em server_dir
+        //String nomeCli;
+
         for(String cl : clientes){
+          String teste = server_dir+"/"+cl;
+          System.out.println("teste: "+teste);
           File diretorio = new File(server_dir+"/"+cl);
           if(!diretorio.exists()){
             diretorio.mkdir();
