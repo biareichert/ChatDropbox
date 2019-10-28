@@ -17,6 +17,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.lang.InterruptedException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.nio.file.*;
 
 public class ChatClient{
   private static final String ACCESS_TOKEN = "bV9CF_mwE-AAAAAAAAABTyllMAsCYrSID0reQ-u5pI2U375noLTnfGhTov48M04b";
@@ -77,6 +80,7 @@ public class ChatClient{
 
          FileOutputStream out = new FileOutputStream(destino+nomeDiretorio+"/"+nomeArquivo);///////////////aqui alterar a extensao .serv para download no server
          downloader.download(out);
+
          out.close();
          //deletarArquivoDropbox(arquivo);
       } catch (DbxException ex) {
@@ -91,6 +95,7 @@ public class ChatClient{
            String [] div=arquivo.split("/");//arquivo = /dropbox../f_saida_../nomeArquivo.extensao::: extrair o arquivo
            nomeArquivo=div[div.length-1];
          }
+
          System.out.println("upload: "+nomeCliente+"/"+nomeArquivo+" :: destino: "+destino+"/"+nomeArquivo);
          InputStream in = new FileInputStream(client_dir+"/"+nomeCliente+"/"+nomeArquivo);
          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+nomeArquivo).uploadAndFinish(in);
@@ -166,22 +171,36 @@ public class ChatClient{
        System.out.println(ex.getMessage());
     }
 
-    List<String> arquivosPUpload = new ArrayList<String>(Arrays.asList(subDiretorioClient.list()));
 
-    String resposta="";
-    for(String arq: arquivosPUpload){
-
-     System.out.println("Fazer Upload de: "+arq+". (s/n)?");
-     resposta = new Scanner(System.in).next().toLowerCase();
-
-     if(resposta.compareTo("s")==0)
-     cc.uploadArquivoDropbox(arq,client_dir,"/"+dropboxDir+"/"+clienteSaida+"_"+client_dir,extensaoClientSaida);
-
-    }
-
+    Scanner ler = new Scanner(System.in);
     while(true){
+      System.out.println("Deseja enviar um arquivo?");
+      System.out.println("0 - Sim");
+      System.out.println("1 - Não");
+      int resp = ler.nextInt();
 
-     System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
+      if(resp == 0){
+        System.out.println("Informe o nome do arquivo");
+        String a = ler.next();
+        String conteudoArq = new String(Files.readAllBytes(Paths.get(a)));
+
+        try	{
+			       FileWriter arq = new FileWriter(client_dir+"/"+client_dir+"/"+a);
+			       PrintWriter gravarArq = new PrintWriter(arq);
+			       gravarArq.printf(conteudoArq);
+			       arq.close();
+		   }catch(Exception ex){
+			       ex.printStackTrace();
+		   }
+       List<String> arquivosPUpload = new ArrayList<String>(Arrays.asList(subDiretorioClient.list()));
+
+       String resposta="";
+       for(String arq: arquivosPUpload){
+        cc.uploadArquivoDropbox(arq,client_dir,"/"+dropboxDir+"/"+clienteSaida+"_"+client_dir,extensaoClientSaida);
+       }
+      }
+
+      System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
 
       List<String> arquivosPDownload = cc.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir);
 
