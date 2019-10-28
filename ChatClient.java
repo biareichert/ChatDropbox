@@ -78,7 +78,7 @@ public class ChatClient{
          FileOutputStream out = new FileOutputStream(destino+nomeDiretorio+"/"+nomeArquivo);///////////////aqui alterar a extensao .serv para download no server
          downloader.download(out);
          out.close();
-         deletarArquivoDropbox(arquivo);
+         //deletarArquivoDropbox(arquivo);
       } catch (DbxException ex) {
           System.out.println(ex.getMessage());
       }
@@ -91,7 +91,6 @@ public class ChatClient{
            String [] div=arquivo.split("/");//arquivo = /dropbox../f_saida_../nomeArquivo.extensao::: extrair o arquivo
            nomeArquivo=div[div.length-1];
          }
-
          System.out.println("upload: "+nomeCliente+"/"+nomeArquivo+" :: destino: "+destino+"/"+nomeArquivo);
          InputStream in = new FileInputStream(client_dir+"/"+nomeCliente+"/"+nomeArquivo);
          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+nomeArquivo).uploadAndFinish(in);
@@ -161,8 +160,8 @@ public class ChatClient{
       System.out.println("Upload pom.xml em: "+"/"+dropboxDir+"/"+clienteSaida+"_"+client_dir);
       FileMetadata metadata = client.files().uploadBuilder("/"+dropboxDir+"/"+clienteSaida+"_"+client_dir+"/pom.xml").uploadAndFinish(in);
       FileMetadata metadata1 = client.files().uploadBuilder("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir+"/pom.xml").uploadAndFinish(in);
-      Metadata metadata2 = client.files().delete("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir+"/"+"pom.xml");
-      Metadata metadata3 = client.files().delete("/"+dropboxDir+"/"+clienteSaida+"_"+client_dir+"/"+"pom.xml");
+      //Metadata metadata2 = client.files().delete("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir+"/"+"pom.xml");
+      //Metadata metadata3 = client.files().delete("/"+dropboxDir+"/"+clienteSaida+"_"+client_dir+"/"+"pom.xml");
     }catch (DbxException ex) {
        System.out.println(ex.getMessage());
     }
@@ -181,7 +180,8 @@ public class ChatClient{
     }
 
     while(true){
-      System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
+
+     System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
 
       List<String> arquivosPDownload = cc.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir);
 
