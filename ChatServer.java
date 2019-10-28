@@ -121,7 +121,7 @@ public class ChatServer{
 
         for(String cl : clientes){
           String teste = server_dir+"/"+cl;
-          System.out.println("teste: "+teste);
+        //  System.out.println(teste);
           File diretorio = new File(server_dir+"/"+cl);
           if(!diretorio.exists()){
             diretorio.mkdir();
