@@ -3,23 +3,28 @@
 #                                        Passo a Passo
 #######################################################################################################
 
-1. Limpar arquivos antigos do projeto mvn
-  $ make clean
-
-2. Criar projeto mvn
+1. Criar projeto mvn
   $ make
 
-3. Abrir pasta criada
- $ cd sdi-dropbox
+2. Em outro terminal copiar o arquivo.chat para a pasta sdi-dropbox que foi criada
+  $ scp arquivo.chat aluno1@10.20.218.193:chatDropbox/sdi-dropbox
+
+3. Em outro termianl abrir pasta criada
+  $ cd sdi-dropbox
 
 4. Compilar o servidor
   $ make server
 
-5. Em outro terminal, compilar o cliente
+5. Em outro terminal, abrir a pasta criada
+  $cd sdi-dropbox
+
+6. No mesmo terminal do item 5, compilar o cliente
   $ make client
 
   #######################################################################################################
   #                                        Observações
   #######################################################################################################
 
-O ChatServer baixa os arquivos que estão na pasta f_saida de cada cliente e faz o upload em server_dir.
+Há uma pasta com o nome do usuário, por exemplo: jose/ jose, dentro dela há o arquivo que será compartilhado.
+O ChatServer baixa os arquivos que estão na pasta saida de cada cliente e faz o upload em server_dir.
+A troca de mensagens acontece automaticamente, você só precisa adicionar um arquivo na pasta do usuário. Este arquivo será compartilhado com os demais.
