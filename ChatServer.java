@@ -16,6 +16,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.lang.InterruptedException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.nio.file.*;
 
 public class ChatServer{
 
@@ -80,15 +83,38 @@ public class ChatServer{
       }
   }
 
-  public void uploadArquivoDropbox(String arquivo, String nomeCliente, String destino, String extensao) throws DbxException, IOException{
+  public void uploadArquivoDropbox(String arquivo, String nomeCliente, String destino, String extensao, String nome) throws DbxException, IOException{
       try {
           String [] div=arquivo.split("/");//arquivo = /dropbox../f_saida_../nomeArquivo.extensao::: extrair o arquivo
           String nomeArquivo = div[div.length-1];
-          nomeArquivo=nomeArquivo.replace(extensaoClientSaida, extensaoServer);
-          System.out.println("upload: "+server_dir+"/"+nomeCliente+"/"+nomeArquivo+" :: destino: "+destino+"/"+nomeArquivo);
+          String conteudoArq = new String(Files.readAllBytes(Paths.get(nomeArquivo)));
+          String novoNome = "";
+          if(extensao.equals(".client")){
+            novoNome = nome + "-" + nomeCliente + ".client";
+          }else{
+            if(extensao.equals(".serv")){
+              novoNome = nomeCliente+extensaoServer;
+            }
+          }
+
+          System.out.println("novoNome: "+novoNome);
+          System.out.println("extensao: "+extensao);
+          System.out.println("destino: "+destino);
+
+          try	{
+  			       FileWriter arq = new FileWriter(server_dir+"/"+nomeCliente+"/"+novoNome);
+  			       PrintWriter gravarArq = new PrintWriter(arq);
+  			       gravarArq.printf(conteudoArq);
+  			       arq.close();
+  		   }catch(Exception ex){
+  			       ex.printStackTrace();
+  		   }
+
+          //nomeArquivo=nomeArquivo.replace(extensaoClientSaida, extensaoServer);
+          System.out.println("upload: "+server_dir+"/"+nomeCliente+"/"+novoNome+" :: destino: "+destino+"/"+novoNome);
           // if(extensao.compareTo(extensaoClientEntrada)!=0){
-          InputStream in = new FileInputStream(server_dir+"/"+nomeCliente+"/"+nomeArquivo);
-          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+nomeArquivo).uploadAndFinish(in);
+          InputStream in = new FileInputStream(server_dir+"/"+nomeCliente+"/"+novoNome);
+          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+novoNome).uploadAndFinish(in);
       }catch (DbxException ex) {
           System.out.println(ex.getMessage());
       }
@@ -130,17 +156,17 @@ public class ChatServer{
           List<String> clienteArquivos = cs.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteSaida+"_"+cl);//retorna o caminho completo de cada arquivo
 
           for(String ca : clienteArquivos){
-            cs.baixarArquivoDropbox(ca,server_dir+"/"+cl,extensaoServer);
+            //cs.baixarArquivoDropbox(ca,server_dir+"/"+cl,extensaoServer);
             cs.deletarArquivoDropbox(ca);
 
             for(String cl1 : clientes){
 
               if(cl1.compareTo(cl)==0){//nao enviar para o mesmo cliente de que se foi baixado
-                cs.uploadArquivoDropbox(ca,cl,"/"+dropboxDir+"/"+server_dir+"/"+cl, extensaoServer);
+                cs.uploadArquivoDropbox(ca,cl,"/"+dropboxDir+"/"+server_dir+"/"+cl, extensaoServer, cl);
                 continue;
               }
 
-              cs.uploadArquivoDropbox(ca,cl,"/"+dropboxDir+"/"+clienteEntrada+"_"+cl1, extensaoClientEntrada);
+              cs.uploadArquivoDropbox(ca,cl,"/"+dropboxDir+"/"+clienteEntrada+"_"+cl1, extensaoClientEntrada, cl1);
             }
 
           }
