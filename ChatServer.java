@@ -102,7 +102,7 @@ public class ChatServer{
           System.out.println("destino: "+destino);
 
           try	{
-  			       FileWriter arq = new FileWriter(server_dir+"/"+nomeCliente+"/"+novoNome);
+  			       FileWriter arq = new FileWriter(server_dir+"/"+novoNome);
   			       PrintWriter gravarArq = new PrintWriter(arq);
   			       gravarArq.printf(conteudoArq);
   			       arq.close();
@@ -111,10 +111,10 @@ public class ChatServer{
   		   }
 
           //nomeArquivo=nomeArquivo.replace(extensaoClientSaida, extensaoServer);
-          System.out.println("upload: "+server_dir+"/"+nomeCliente+"/"+novoNome+" :: destino: "+destino+"/"+novoNome);
+          System.out.println("upload: "+server_dir+"/"+novoNome+" :: destino: "+dropboxDir+"/"+novoNome);
           // if(extensao.compareTo(extensaoClientEntrada)!=0){
-          InputStream in = new FileInputStream(server_dir+"/"+nomeCliente+"/"+novoNome);
-          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+novoNome).uploadAndFinish(in);
+          InputStream in = new FileInputStream(server_dir+"/"+novoNome);
+          FileMetadata metadata = client.files().uploadBuilder("/"+dropboxDir+"/"+novoNome).uploadAndFinish(in);
       }catch (DbxException ex) {
           System.out.println(ex.getMessage());
       }
