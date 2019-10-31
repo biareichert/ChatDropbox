@@ -64,10 +64,10 @@ public class ChatClient{
   }
 
   public void baixarArquivoDropbox(String arquivo, String destino, String extensao) throws DbxException, IOException{
-    DbxDownloader<FileMetadata> downloader = client.files().download(arquivo);
+      DbxDownloader<FileMetadata> downloader = client.files().download(arquivo);
       try {
-         String [] div=arquivo.split("/");//arquivo = /dropbox../f_saida_../nomeArquivo.extensao::: extrair o arquivo
-         String nomeArquivo = div[div.length-1];//nome arquivo-numero.extensao
+         String [] div=arquivo.split("/");
+         String nomeArquivo = div[div.length-1];
          String [] div2 =nomeArquivo.split("-");
          String nomeDiretorio = div2[0];
          File diretorioClient = new File(destino+"/"+nomeDiretorio);
@@ -75,14 +75,12 @@ public class ChatClient{
             diretorioClient.mkdir();
          }
 
-         System.out.println("nomeArquivo: "+nomeArquivo+"/tnomeDiretorio: "+nomeDiretorio+"/tdestino: "+destino);
-         System.out.println("baixando: "+arquivo+" em: "+destino+nomeDiretorio+"/"+nomeArquivo);
+         //System.out.println("nomeArquivo: "+nomeArquivo+"/tnomeDiretorio: "+nomeDiretorio+"/tdestino: "+destino);
+         //System.out.println("baixando: "+arquivo+" em: "+destino+nomeDiretorio+"/"+nomeArquivo);
 
-         FileOutputStream out = new FileOutputStream(destino+nomeDiretorio+"/"+nomeArquivo);///////////////aqui alterar a extensao .serv para download no server
+         FileOutputStream out = new FileOutputStream(destino+nomeDiretorio+"/"+nomeArquivo);
          downloader.download(out);
-
          out.close();
-         //deletarArquivoDropbox(arquivo);
       } catch (DbxException ex) {
           System.out.println(ex.getMessage());
       }
@@ -92,18 +90,17 @@ public class ChatClient{
      try {
          String nomeArquivo = arquivo;
          if(nomeArquivo.contains("/")){
-           String [] div=arquivo.split("/");//arquivo = /dropbox../f_saida_../nomeArquivo.extensao::: extrair o arquivo
+           String [] div=arquivo.split("/");
            nomeArquivo=div[div.length-1];
          }
 
-         System.out.println("upload: "+nomeCliente+"/"+nomeArquivo+" :: destino: "+destino+"/"+nomeArquivo);
+         System.out.println("Fazendo Upload...");
          InputStream in = new FileInputStream(client_dir+"/"+nomeCliente+"/"+nomeArquivo);
          FileMetadata metadata = client.files().uploadBuilder(destino+"/"+nomeArquivo).uploadAndFinish(in);
 
      }catch (DbxException ex) {
           System.out.println(ex.getMessage());
      }
-
   }
 
   public static void main(String[] args) throws DbxException, IOException{
@@ -115,6 +112,7 @@ public class ChatClient{
     List<String> diretoriosDropbox = cc.listarArquivosDiretorioDropbox(dropboxDir);
 
     System.out.println("Bem vindo ao chat!");
+    System.out.println("");
 
     for(String dir : diretoriosDropbox){
       if(dir.contains(clienteEntrada)){
@@ -126,7 +124,7 @@ public class ChatClient{
 
     while(pronto==false){
       controle=0;
-      System.out.println("Digite o nome do cliente: ");
+      System.out.println("Informe o nome do cliente: ");
       client_dir = new Scanner(System.in).next();
 
       if(clientes.size()==0)
@@ -142,13 +140,12 @@ public class ChatClient{
           System.out.println("1 - Não");
           int r = ler.nextInt();
 
-
           if(r == 0)
             pronto=true;
             break;
         }
       }
-      if(controle==0)//n existe nome igual
+      if(controle==0)
         pronto=true;
     }
 
@@ -157,32 +154,20 @@ public class ChatClient{
         diretorioClient.mkdir();
     }
 
-    File subDiretorioClient = new File(client_dir+"/"+client_dir);//onde estao as mensagens do cliente
-    System.out.println(client_dir+"/"+client_dir);
+    File subDiretorioClient = new File(client_dir+"/"+client_dir);
+
     if(!subDiretorioClient.exists()){
         subDiretorioClient.mkdir();
     }
 
-    try{
-      InputStream in = new FileInputStream("pom.xml");
-      System.out.println("Upload pom.xml em: "+"/"+dropboxDir+"/"+clienteSaida+"_"+client_dir);
-      FileMetadata metadata = client.files().uploadBuilder("/"+dropboxDir+"/"+clienteSaida+"_"+client_dir+"/pom.xml").uploadAndFinish(in);
-      FileMetadata metadata1 = client.files().uploadBuilder("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir+"/pom.xml").uploadAndFinish(in);
-      //Metadata metadata2 = client.files().delete("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir+"/"+"pom.xml");
-      //Metadata metadata3 = client.files().delete("/"+dropboxDir+"/"+clienteSaida+"_"+client_dir+"/"+"pom.xml");
-    }catch (DbxException ex) {
-       System.out.println(ex.getMessage());
-    }
-
-
     Scanner ler = new Scanner(System.in);
     while(true){
 
-        System.out.println("Informe o nome do arquivo");
-        String a = ler.next();
-        String conteudoArq = new String(Files.readAllBytes(Paths.get(a)));
+       System.out.println("Informe o nome do arquivo");
+       String a = ler.next();
+       String conteudoArq = new String(Files.readAllBytes(Paths.get(a)));
 
-        try	{
+       try	{
 			       FileWriter arq = new FileWriter(client_dir+"/"+client_dir+"/"+a);
 			       PrintWriter gravarArq = new PrintWriter(arq);
 			       gravarArq.printf(conteudoArq);
@@ -197,29 +182,21 @@ public class ChatClient{
         cc.uploadArquivoDropbox(arq,client_dir,"/"+dropboxDir+"/"+clienteSaida+"_"+client_dir,extensaoClientSaida);
        }
 
+       System.out.println("Verificando Arquivos...");
 
-        System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
+       List<String> arquivosPDownload = cc.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir);
 
-        List<String> arquivosPDownload = cc.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir);
+       for(String arq : arquivosPDownload){
+          cc.baixarArquivoDropbox(arq, client_dir+"/",extensaoClientEntrada);
+       }
 
-        for(String arq : arquivosPDownload){
-        //String arquivo, String destino, String extensao
-          cc.baixarArquivoDropbox(arq, client_dir+"/",extensaoClientEntrada);//baixar em clientDir/nomeArquivo
-        //ideia, no clientDir vai existir o dir de outros clientes
-        }
+       System.out.println("Okay");
 
-        System.out.println("Tudo pronto!");
-
-        try{
+       try{
           Thread.sleep(10000);
-        }catch (InterruptedException ex) {
+       }catch (InterruptedException ex) {
           System.out.println(ex);
-        }
-
-
-
+       }
     }
-
   }
-
 }
