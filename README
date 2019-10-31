@@ -9,23 +9,26 @@
 2. Em outro terminal copiar o arquivo.chat para a pasta sdi-dropbox que foi criada
   $ scp arquivo.chat aluno1@10.20.218.193:chatDropbox/sdi-dropbox
 
-3. Em outro termianl abrir pasta criada
+3. Em outro terminal abrir a pasta criada
   $ cd sdi-dropbox
 
-4. Compilar o servidor
-  $ make server
+4. No mesmo terminal do item 3, compilar o servidor
+  $ java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.2/dropbox-core-sdk-2.1.2.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.ChatServer
 
 5. Em outro terminal, abrir a pasta criada
   $cd sdi-dropbox
 
 6. No mesmo terminal do item 5, compilar o cliente
-  $ make client
+  $ java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.2/dropbox-core-sdk-2.1.2.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.ChatClient
 
   #######################################################################################################
   #                                        Observações
   #######################################################################################################
 
+Já coloquei uma cliente com nome "bruna" no dropbox para receber o primeiro arquivo do primeiro cliente. ;)
 Ao rodar o cliente ele irá pedir o nome do cliente, em seguida irá pedir o nome de um arquivo para ser compartilhado.
+Após informar o nome do arquivo, aguarde alguns segundos para o servidor fazer os uploads.
 Os arquivos.client seguem o formato: destinatário-remetente.client.
 As pastas criadas no diretório dropbox_chat_bia são apenas para controle de clientes.
 Para fazer o diff você pode fazer pelo próprio cmd, porque os mesmo arquivos que estão no dropbox estão salvos na pasta sdi-dropbox/arquivos_server.
+Para comparar os arquivos do dropbox você precisa fazer o download porque ele não lê arquivo.client ou arquivo.serv.
