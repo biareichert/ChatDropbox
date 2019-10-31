@@ -23,7 +23,7 @@ import java.nio.file.*;
 public class ChatServer{
 
   private static final String ACCESS_TOKEN = "bV9CF_mwE-AAAAAAAAABTyllMAsCYrSID0reQ-u5pI2U375noLTnfGhTov48M04b";
-  private static final String dropboxDir = "dropbox_chat_bia", clienteEntrada="entrada", clienteSaida = "saida", server_dir="server_dir", extensaoClientEntrada=".client", extensaoClientSaida=".chat", extensaoServer=".serv";
+  private static final String dropboxDir = "dropbox_chat_bia", clienteEntrada="cliente", clienteSaida = "cliente", server_dir="arquivos_server", extensaoClientEntrada=".client", extensaoClientSaida=".chat", extensaoServer=".serv";
   //server_dir é o nome do diretorio do servidor local e dropbox (mesmo nome)
 
   public static DbxRequestConfig config;
@@ -88,6 +88,7 @@ public class ChatServer{
           String [] div=arquivo.split("/");//arquivo = /dropbox../f_saida_../nomeArquivo.extensao::: extrair o arquivo
           String nomeArquivo = div[div.length-1];
           String conteudoArq = new String(Files.readAllBytes(Paths.get(nomeArquivo)));
+          System.out.println(conteudoArq);
           String novoNome = "";
           if(extensao.equals(".client")){
             novoNome = nome + "-" + nomeCliente + ".client";
