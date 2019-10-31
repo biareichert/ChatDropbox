@@ -9,7 +9,7 @@ cGROUP=com
 nGROUP=wsudesc
 GROUP=$(cGROUP).$(nGROUP)
 MVNFLAGS=archetype:generate -DgroupId=$(GROUP) -DartifactId=$(NAME) -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
-MVNDEP=dependency:get -Dartifact=com.dropbox.core:dropbox-core-sdk:2.1.1
+MVNDEP=dependency:get -Dartifact=com.dropbox.core:dropbox-core-sdk:2.1.2
 
 JFLAGS = -g
 
@@ -68,15 +68,9 @@ allOK:
 	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 	@echo "%%%%                     SDIDB: Para testar UploadDB (/tmp/test.txt), execute no terminal:	"
 	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.SDITestDropBox;  cd -"
-	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.ChatServer;  cd -"
-	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.ChatClient;  cd -"
-
-client:
-	java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.ChatClient
-
-server:
-	java -cp  target/sdi-dropbox-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.1/dropbox-core-sdk-2.1.1.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar com.wsudesc.app.ChatServer
+	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.2/dropbox-core-sdk-2.1.2.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.SDITestDropBox;  cd -"
+	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.2/dropbox-core-sdk-2.1.2.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.ChatServer;  cd -"
+	@echo "cd $(NAME) ; java -cp  target/$(NAME)-1.0-SNAPSHOT.jar:com/dropbox/core/dropbox-core-sdk/2.1.2/dropbox-core-sdk-2.1.2.jar:com/fasterxml/jackson/core/jackson-core/2.7.4/jackson-core-2.7.4.jar $(cGROUP).$(nGROUP).app.ChatClient;  cd -"
 
 cleanall:
 	rm -rf $(NAME)
