@@ -175,7 +175,7 @@ public class ChatServer{
 
         System.out.println("Tudo pronto!");
         try{
-          Thread.sleep(10000);
+          Thread.sleep(20000);
         }catch (InterruptedException ex) { System.out.println(ex); }
       }
 
