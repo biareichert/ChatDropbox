@@ -6,8 +6,8 @@
 1. Criar projeto mvn
   $ make
 
-2. Em outro terminal copiar o arquivo.chat para a pasta sdi-dropbox que foi criada
-  $ scp arquivo.chat aluno1@10.20.218.193:chatDropbox/sdi-dropbox
+2. Em outro terminal copiar um arquivo.chat para a pasta sdi-dropbox que foi criada (por exemplo):
+  $ scp chatDropbox/arquivo.chat aluno1@10.20.218.193:chatDropbox/sdi-dropbox
 
 3. Em outro terminal abrir a pasta criada
   $ cd sdi-dropbox
