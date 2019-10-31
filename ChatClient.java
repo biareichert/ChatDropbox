@@ -23,7 +23,7 @@ import java.nio.file.*;
 
 public class ChatClient{
   private static final String ACCESS_TOKEN = "bV9CF_mwE-AAAAAAAAABTyllMAsCYrSID0reQ-u5pI2U375noLTnfGhTov48M04b";
-  private static final String dropboxDir = "dropbox_chat_bia", clienteEntrada="entrada", clienteSaida = "saida", server_dir="server_dir", extensaoClientEntrada=".client", extensaoClientSaida=".chat", extensaoServer=".serv";
+  private static final String dropboxDir = "dropbox_chat_bia", clienteEntrada="cliente", clienteSaida = "cliente", server_dir="arquivos_server", extensaoClientEntrada=".client", extensaoClientSaida=".chat", extensaoServer=".serv";
   private static String client_dir;
   public static DbxRequestConfig config;
   public static DbxClientV2 client;
@@ -177,7 +177,7 @@ public class ChatClient{
 
     Scanner ler = new Scanner(System.in);
     while(true){
-    
+
         System.out.println("Informe o nome do arquivo");
         String a = ler.next();
         String conteudoArq = new String(Files.readAllBytes(Paths.get(a)));
