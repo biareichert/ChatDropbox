@@ -136,11 +136,14 @@ public class ChatClient{
 
         if(cn.compareTo(client_dir)==0){
           controle=1;
-          System.out.println("Esse nome ja esta em uso, voce eh: "+ cn+"? (s/n): ");
-          String r = new Scanner(System.in).next();
-          r= r.toLowerCase();
+          Scanner ler = new Scanner(System.in);
+          System.out.println("Esse nome já está em uso, você é "+ cn+"e está tentando logar novamente? ");
+          System.out.println("0 - Sim");
+          System.out.println("1 - Não");
+          int r = ler.nextInt();
 
-          if(r.compareTo("s")==0)
+
+          if(r == 0)
             pronto=true;
             break;
         }
@@ -174,12 +177,7 @@ public class ChatClient{
 
     Scanner ler = new Scanner(System.in);
     while(true){
-      System.out.println("Deseja enviar um arquivo?");
-      System.out.println("0 - Sim");
-      System.out.println("1 - Não");
-      int resp = ler.nextInt();
-
-      if(resp == 0){
+    
         System.out.println("Informe o nome do arquivo");
         String a = ler.next();
         String conteudoArq = new String(Files.readAllBytes(Paths.get(a)));
@@ -198,24 +196,27 @@ public class ChatClient{
        for(String arq: arquivosPUpload){
         cc.uploadArquivoDropbox(arq,client_dir,"/"+dropboxDir+"/"+clienteSaida+"_"+client_dir,extensaoClientSaida);
        }
-      }
 
-      System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
 
-      List<String> arquivosPDownload = cc.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir);
+        System.out.println("Verificando atualizacoes no servidor....Nao fechar!");
 
-      for(String arq : arquivosPDownload){
-      //String arquivo, String destino, String extensao
-        cc.baixarArquivoDropbox(arq, client_dir+"/",extensaoClientEntrada);//baixar em clientDir/nomeArquivo
-      //ideia, no clientDir vai existir o dir de outros clientes
-      }
+        List<String> arquivosPDownload = cc.listarArquivosDiretorioDropbox("/"+dropboxDir+"/"+clienteEntrada+"_"+client_dir);
 
-      System.out.println("Tudo pronto!");
-      try{
-        Thread.sleep(10000);
-      }catch (InterruptedException ex) {
-        System.out.println(ex);
-      }
+        for(String arq : arquivosPDownload){
+        //String arquivo, String destino, String extensao
+          cc.baixarArquivoDropbox(arq, client_dir+"/",extensaoClientEntrada);//baixar em clientDir/nomeArquivo
+        //ideia, no clientDir vai existir o dir de outros clientes
+        }
+
+        System.out.println("Tudo pronto!");
+
+        try{
+          Thread.sleep(10000);
+        }catch (InterruptedException ex) {
+          System.out.println(ex);
+        }
+
+
 
     }
 
