@@ -25,6 +25,7 @@
   #                                        Observações
   #######################################################################################################
 
-Há uma pasta com o nome do usuário, por exemplo: jose/ jose, dentro dela há o arquivo que será compartilhado.
-O ChatServer baixa os arquivos que estão na pasta saida de cada cliente e faz o upload em server_dir.
-A troca de mensagens acontece automaticamente, você só precisa adicionar um arquivo na pasta do usuário. Este arquivo será compartilhado com os demais.
+Ao rodar o cliente ele irá pedir o nome do cliente, em seguida irá pedir o nome de um arquivo para ser compartilhado.
+Os arquivos.client seguem o formato: destinatário-remetente.client.
+As pastas criadas no diretório dropbox_chat_bia são apenas para controle de clientes.
+Para fazer o diff você pode fazer pelo próprio cmd, porque os mesmo arquivos que estão no dropbox estão salvos na pasta sdi-dropbox/arquivos_server.
